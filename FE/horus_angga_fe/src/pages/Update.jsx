@@ -57,7 +57,7 @@ function Update() {
           <label className='font-medium'>Username</label>
           <input type="text" name="username" value={formData.username} onChange={handleChange} className='border-2 rounded-lg px-2 border-black py-2 mb-4' placeholder='masukkan username..' required />
           <label className='font-medium'>Password</label>
-          <input type="password" name="password" value={formData.password} onChange={handleChange} className='border-2 rounded-lg px-2 border-black py-2 mb-4' placeholder='masukkan password..' required />
+          <input type="password" name="password" value={formData.password} onChange={handleChange} className='border-2 rounded-lg px-2 border-black py-2 mb-4' placeholder='Isi jika ingin merubah password' />
           <label className='font-medium'>Email</label>
           <input type="email" name="email" value={formData.email} onChange={handleChange} className='border-2 rounded-lg px-2 border-black py-2 mb-4' placeholder='masukkan email..' required />
           <label className='font-medium'>Name</label>

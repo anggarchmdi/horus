@@ -69,7 +69,7 @@ class UserController extends Controller
             'username' => 'required',
             'email' => 'required|email',
             'name' => 'required',
-            'password' => 'required'
+            'password' => 'nullable'
         ]);
 
         $user = User::findOrFail($id);
