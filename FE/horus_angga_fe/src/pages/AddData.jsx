@@ -23,16 +23,24 @@ function AddData() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://127.0.0.1:8000/users', formData, {
+      const csrfToken = document.querySelector('meta[name="csrf-token"]');
+      console.log(formData); // Inside handleSubmit function before axios.post call
+      await axios.post('http://127.0.0.1:8000/api/users', formData, {
         headers: {
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+          'X-CSRF-TOKEN': csrfToken ? csrfToken.content : '', // Periksa jika csrfToken ada
+          
         },
       });
-      navigate('/'); // Redirect after successful addition
+      navigate('/dashboard'); // Redirect after successful addition
     } catch (error) {
-      console.error('Error adding user:', error);
+        if (error.response) {
+          console.error('Error adding user:', error.response.data); // Log the error details
+        } else {
+          console.error('Error adding user:', error);
+        }
     }
-};
+  }
+      
 
   return (
     <div className="bg-slate-900 h-screen w-full flex justify-center items-center">
@@ -43,14 +51,51 @@ function AddData() {
             <button onClick={handleBack} className='bg-red-500 text-white px-4 py-1.5 rounded-lg shadow-lg transition-all transform hover:scale-95 duration-300'>Kembali</button>
           </div>
           <label className='font-medium'>Username</label>
-          <input type="text" name="username" value={formData.username} onChange={handleChange} className='border-2 rounded-lg px-2 border-black py-2 mb-4' placeholder='masukkan username..' required />
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            className='border-2 rounded-lg px-2 border-black py-2 mb-4'
+            placeholder='masukkan username..'
+            required
+          />
           <label className='font-medium'>Password</label>
-          <input type="password" name="password" value={formData.password} onChange={handleChange} className='border-2 rounded-lg px-2 border-black py-2 mb-4' placeholder='masukkan password..' required />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className='border-2 rounded-lg px-2 border-black py-2 mb-4'
+            placeholder='masukkan password..'
+            required
+          />
           <label className='font-medium'>Email</label>
-          <input type="email" name="email" value={formData.email} onChange={handleChange} className='border-2 rounded-lg px-2 border-black py-2 mb-4' placeholder='masukkan email..' required />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className='border-2 rounded-lg px-2 border-black py-2 mb-4'
+            placeholder='masukkan email..'
+            required
+          />
           <label className='font-medium'>Name</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} className='border-2 rounded-lg px-2 border-black py-2 mb-4' placeholder='masukkan name..' required />
-          <button type='submit' className='bottom-0 bg-blue-500 shadow-xl text-white font-semibold py-2 rounded-xl transition-all transform hover:scale-95 duration-300'>Tambah</button>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className='border-2 rounded-lg px-2 border-black py-2 mb-4'
+            placeholder='masukkan name..'
+            required
+          />
+          <button
+            type='submit'
+            className='bottom-0 bg-blue-500 shadow-xl text-white font-semibold py-2 rounded-xl transition-all transform hover:scale-95 duration-300'
+          >
+            Tambah
+          </button>
         </form>
       </div>
     </div>

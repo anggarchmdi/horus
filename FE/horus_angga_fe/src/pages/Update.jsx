@@ -10,8 +10,14 @@ function Update() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/users/${userId}`);
-        setFormData(response.data);
+        const response = await axios.get(`http://127.0.0.1:8000/api/users/${userId}`);
+        // Pastikan response.data memiliki semua properti yang dibutuhkan
+        setFormData({
+          username: response.data.username || '', // Nilai default jika undefined
+          password: response.data.password || '',
+          email: response.data.email || '',
+          name: response.data.name || '',
+        });
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -29,21 +35,17 @@ function Update() {
   };
 
   const handleUpdate = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     try {
-      // Get CSRF token from meta tag
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-      // Set Axios defaults
       axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
 
-      await axios.put(`http://127.0.0.1:8000/users/${userId}`, formData);
-      navigate('/'); // Navigate back after updating
+      await axios.put(`http://127.0.0.1:8000/api/users/${userId}`, formData);
+      navigate('/dashboard'); // Navigate back after updating
     } catch (error) {
       console.error('Error updating user:', error);
     }
-};
-
+  };
 
   return (
     <div className="bg-slate-900 h-screen w-full flex justify-center items-center">
