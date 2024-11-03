@@ -15,9 +15,8 @@ function Login() {
   const handleLogin = async () => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/login', { username, password });
-      // Simpan token ke localStorage atau state
       localStorage.setItem('token', response.data.token);
-      navigate('/dashboard'); // Redirect ke halaman utama setelah login berhasil
+      navigate('/dashboard');
     } catch (error) {
       setError('Login gagal: ' + (error.response?.data?.message || 'Server tidak merespons'));
     }

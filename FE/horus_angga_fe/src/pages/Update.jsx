@@ -11,9 +11,8 @@ function Update() {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/users/${userId}`);
-        // Pastikan response.data memiliki semua properti yang dibutuhkan
         setFormData({
-          username: response.data.username || '', // Nilai default jika undefined
+          username: response.data.username || '',
           password: response.data.password || '',
           email: response.data.email || '',
           name: response.data.name || '',
@@ -41,7 +40,7 @@ function Update() {
       axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
 
       await axios.put(`http://127.0.0.1:8000/api/users/${userId}`, formData);
-      navigate('/dashboard'); // Navigate back after updating
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error updating user:', error);
     }

@@ -8,10 +8,10 @@ function Home() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      // Redirect ke halaman login jika belum login
+      
       navigate('/');
     }
-  }, [navigate]); // Menambahkan navigate ke dalam dependency array
+  }, [navigate]);
 
  
 

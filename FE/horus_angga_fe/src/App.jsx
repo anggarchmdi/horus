@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/home';
+import Home from './pages/Home';
 import AddData from './pages/AddData';
 import Update from './pages/Update';
-import Login from './pages/login';
-import Register from './pages/register';
-import NotFound from './pages/notFound';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import NotFound from './pages/NotFound';
 
 
 function App() {

@@ -24,17 +24,17 @@ function AddData() {
     e.preventDefault();
     try {
       const csrfToken = document.querySelector('meta[name="csrf-token"]');
-      console.log(formData); // Inside handleSubmit function before axios.post call
+      console.log(formData);
       await axios.post('http://127.0.0.1:8000/api/users', formData, {
         headers: {
-          'X-CSRF-TOKEN': csrfToken ? csrfToken.content : '', // Periksa jika csrfToken ada
+          'X-CSRF-TOKEN': csrfToken ? csrfToken.content : '',
           
         },
       });
-      navigate('/dashboard'); // Redirect after successful addition
+      navigate('/dashboard');
     } catch (error) {
         if (error.response) {
-          console.error('Error adding user:', error.response.data); // Log the error details
+          console.error('Error adding user:', error.response.data);
         } else {
           console.error('Error adding user:', error);
         }

@@ -25,7 +25,7 @@ function Register() {
     try {
       await axios.post('http://127.0.0.1:8000/api/users', formData, {
       });
-      navigate('/'); // Redirect after successful addition
+      navigate('/');
     } catch (error) {
       console.error('Error adding user:', error);
     }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User; // Pastikan Anda menggunakan model yang tepat
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -12,20 +12,19 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil parameter untuk sorting
-        $sortField = $request->query('sort_field', 'id'); // Default sort by 'id'
-        $sortDirection = $request->query('sort_direction', 'asc'); // Default sort direction 'asc'
+        // Ambil parameter sorting
+        $sortField = $request->query('sort_field', 'id');
+        $sortDirection = $request->query('sort_direction', 'asc');
 
         // Validasi parameter sorting
         if (!in_array($sortField, ['id', 'username', 'email', 'name'])) {
-            $sortField = 'id'; // Fallback to 'id' if invalid
+            $sortField = 'id';
         }
 
         if (!in_array($sortDirection, ['asc', 'desc'])) {
-            $sortDirection = 'asc'; // Fallback to 'asc' if invalid
+            $sortDirection = 'asc';
         }
 
-        // Fetch users with sorting
         $users = User::orderBy($sortField, $sortDirection)->get();
 
         return response()->json($users)
@@ -70,7 +69,7 @@ class UserController extends Controller
             'username' => 'required',
             'email' => 'required|email',
             'name' => 'required',
-            'password' => 'nullable' // Allow password to be optional on update
+            'password' => 'required'
         ]);
 
         $user = User::findOrFail($id);
@@ -108,11 +107,11 @@ class UserController extends Controller
 
         $user = User::where('username', $request->username)->first();
 
-        // Cek apakah user ada dan password cocok
+        // validasi
         if ($user && Hash::check($request->password, $user->password)) {
-            // Buat token sederhana untuk sesi ini (misalnya menggunakan JWT atau string acak)
+            // membuuat token sederhana
             $token = Str::random(60);
-            $user->api_token = $token; // simpan token di database
+            $user->api_token = $token;
             $user->save();
 
             // Kirim respons sukses dengan token
